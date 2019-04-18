@@ -8,7 +8,7 @@ class Game
     @player = []
   end
 
-  def add_player
+  def add_player # Permet la sélection des 2 joueurs et leurs symboles
     puts "Bonjour et bienvenue dans mon super jeu de morbak !"
     puts "Au premier joueur de choisir son pseudo"
     print ">> "
@@ -41,7 +41,7 @@ class Game
     puts "Le joueur #{new_name2} a été ajouté à la partie avec le symbole #{symbol2}"
   end
 
-  def who_begins?
+  def who_begins? # Permet de tirer aléatoirement le joueur qui va commencer avec un jet de dé.
     rand1 = dice_roll
     rand2 = dice_roll
     puts "#{@player[0].name} lance un dé, il obtient #{rand1} !"
@@ -59,18 +59,25 @@ class Game
   end
 
 
-  def play_turn
-      puts "C'est au tour de #{@player_on_the_play.name} de jouer"
-      puts "Quelle action veux-tu faire ?"
-      board.board_choice
-      boardcase = gets.chomp.to_i
-      new_value = @player_on_the_play.symbol
-      board.change_value(boardcase,new_value)
-      if @player_on_the_play === @player[1]
-          @player_on_the_play = @player[2]
-      else
-          @player_on_the_play = @player[1]
+  def play_turn # Boucle qui va se répeter pour remplir le damier à chaque tour de jeu
+    board.board_show
+    boardcase_user = nil
+    puts "C'est au tour de #{@player_on_the_play.name} de jouer"
+    puts "Quelle action veux-tu faire ?"
+    board.board_choice
+    while boardcase_user != "0" && boardcase_user != "1" && boardcase_user != "2" && boardcase_user != "3" && boardcase_user != "4" && boardcase_user != "5" && boardcase_user != "6" && boardcase_user != "7" &&boardcase_user != "8"
+    boardcase_user = gets.chomp
+     if boardcase_user.count("012345678") < 1
+      puts "merci de rentrer le bon chiffre"
       end
+    end
+    new_value = @player_on_the_play.symbol
+    board.change_value(boardcase_user.to_i,new_value)
+    if @player_on_the_play == @player[0]
+      @player_on_the_play = @player[1]
+    else
+      @player_on_the_play = @player[0]
+    end
   end
 
   def dice_roll

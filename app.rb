@@ -12,29 +12,17 @@ require_relative 'lib/show'
 
 Bundler.require
 
-
-
 my_game = Game.new("Game 1")
 
 my_game.add_player
-# my_game.board.board_show
 puts "on va voir qui commence !"
 osef = gets.chomp
 my_game.who_begins?
-while my_game.board.is_still_ongoing? != true
+count = 1
+while my_game.board.is_still_ongoing? != true && count < 10
 my_game.play_turn
+count +=1
+puts "Il reste #{10 - count} tour de jeu maximum"
 end
 
 
-
-# my_game.board.change_value(0,"x")
-# my_game.board.change_value(1,"x")
-# my_game.board.change_value(2,"x")
-# my_game.board.change_value(3,"4")
-# my_game.board.change_value(4,"5")
-# my_game.board.change_value(5,"6")
-# my_game.board.change_value(6,"x")
-# my_game.board.change_value(7,"o")
-# my_game.board.change_value(8,"o")
-
-binding.pry
